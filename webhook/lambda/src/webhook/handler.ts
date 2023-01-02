@@ -24,7 +24,8 @@ export async function handle(headers: IncomingHttpHeaders, body: string): Promis
 
   const payload = JSON.parse(body);
   LogFields.fields.event = githubEvent;
-  LogFields.fields.repository = payload.repository.full_name || '';
+  LogFields.fields.action = payload.action || '';
+  LogFields.fields.repository = payload.repository?.full_name || '';
 
   logger.info(`Processing Github event`, LogFields.print());
   const client = new EventBridgeClient({ region: process.env.AWS_REGION });
