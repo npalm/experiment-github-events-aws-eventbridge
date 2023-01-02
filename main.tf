@@ -7,6 +7,11 @@ resource "aws_cloudwatch_event_bus" "messenger" {
   name = "${local.prefix}-messages"
 }
 
+resource "aws_cloudwatch_event_archive" "messenger" {
+  name             = "${local.prefix}-events-archive"
+  event_source_arn = aws_cloudwatch_event_bus.messenger.arn
+}
+
 resource "random_id" "random" {
   byte_length = 20
 }
